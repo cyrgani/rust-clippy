@@ -1,0 +1,17 @@
+error: reference as raw pointer
+  --> tests/ui/borrow_and_ref_as_ptr.rs:9:7
+   |
+LL |     f(&val as *const _);
+   |       ^^^^^^^^^^^^^^^^ help: try: `std::ptr::from_ref(&val)`
+   |
+   = note: `-D clippy::ref-as-ptr` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::ref_as_ptr)]`
+
+error: reference as raw pointer
+  --> tests/ui/borrow_and_ref_as_ptr.rs:10:7
+   |
+LL |     f(&mut val as *mut i32);
+   |       ^^^^^^^^^^^^^^^^^^^^ help: try: `std::ptr::from_mut::<i32>(&mut val)`
+
+error: aborting due to 2 previous errors
+

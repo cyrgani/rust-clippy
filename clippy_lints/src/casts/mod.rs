@@ -806,10 +806,13 @@ impl<'tcx> LateLintPass<'tcx> for Casts {
 
             as_underscore::check(cx, expr, cast_to_hir);
 
-            if self.msrv.meets(msrvs::PTR_FROM_REF) {
-                ref_as_ptr::check(cx, expr, cast_from_expr, cast_to_hir);
-            } else if self.msrv.meets(msrvs::BORROW_AS_PTR) {
-                borrow_as_ptr::check(cx, expr, cast_from_expr, cast_to_hir);
+            let was_ptr_from_ref_emitted = if self.msrv.meets(msrvs::PTR_FROM_REF) {
+                ref_as_ptr::check(cx, expr, cast_from_expr, cast_to_hir)
+            } else {
+                false
+            };
+            if self.msrv.meets(msrvs::BORROW_AS_PTR) && !was_ptr_from_ref_emitted {
+                borrow_as_ptr::check(cx, expr, cast_from_expr, cast_to_hir, &self.msrv);
             }
         }
 

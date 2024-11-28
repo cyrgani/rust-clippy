@@ -14,7 +14,7 @@ pub(super) fn check<'tcx>(
     expr: &'tcx Expr<'_>,
     cast_expr: &'tcx Expr<'_>,
     cast_to_hir_ty: &Ty<'_>,
-) {
+) -> bool {
     let (cast_from, cast_to) = (
         cx.typeck_results().expr_ty(cast_expr),
         cx.typeck_results().expr_ty(expr),
@@ -45,7 +45,7 @@ pub(super) fn check<'tcx>(
                     )
                 }
             },
-            _ => return,
+            _ => return false,
         };
 
         let cast_expr_sugg = Sugg::hir_with_applicability(cx, cast_expr, "_", &mut app);
@@ -59,5 +59,7 @@ pub(super) fn check<'tcx>(
             format!("{std_or_core}::ptr::{fn_name}{turbofish}({cast_expr_sugg})"),
             app,
         );
+        return true;
     }
+    false
 }
