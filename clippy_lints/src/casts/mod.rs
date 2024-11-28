@@ -574,13 +574,13 @@ declare_clippy_lint! {
 declare_clippy_lint! {
     /// ### What it does
     /// Checks for the usage of `&expr as *const T` or
-    /// `&mut expr as *mut T`, and suggest using `ptr::addr_of` or
-    /// `ptr::addr_of_mut` instead.
+    /// `&mut expr as *mut T`, and suggest using `&raw const` or
+    /// `&raw mut` instead.
     ///
     /// ### Why is this bad?
     /// This would improve readability and avoid creating a reference
     /// that points to an uninitialized value or unaligned place.
-    /// Read the `ptr::addr_of` docs for more information.
+    /// Read the `&raw` explanation in the Reference for more information.
     ///
     /// ### Example
     /// ```no_run
@@ -593,10 +593,10 @@ declare_clippy_lint! {
     /// Use instead:
     /// ```no_run
     /// let val = 1;
-    /// let p = std::ptr::addr_of!(val);
+    /// let p = &raw const val;
     ///
     /// let mut val_mut = 1;
-    /// let p_mut = std::ptr::addr_of_mut!(val_mut);
+    /// let p_mut = &raw mut val_mut;
     /// ```
     #[clippy::version = "1.60.0"]
     pub BORROW_AS_PTR,
