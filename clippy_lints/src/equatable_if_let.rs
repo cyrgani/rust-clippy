@@ -17,8 +17,6 @@ declare_clippy_lint! {
     /// * It reads better and has less cognitive load because equality won't cause binding.
     /// * It is a [Yoda condition](https://en.wikipedia.org/wiki/Yoda_conditions). Yoda conditions are widely
     /// criticized for increasing the cognitive load of reading the code.
-    /// * Equality is a simple bool expression and can be merged with `&&` and `||` and
-    /// reuse if blocks
     ///
     /// ### Example
     /// ```rust,ignore
